@@ -33,15 +33,11 @@ At the time of writing, Joker has just been released and it's great, so I'm deve
 
 ## Install
 
-1. Install an [AMP Stack](https://en.wikipedia.org/wiki/List_of_Apache%E2%80%93MySQL%E2%80%93PHP_packages)
-
-2. Open `httpd.conf` in located in `xampp\apache\conf\`
-
-3. Change the `DocumentRoot` and `Directory` path to this repository's path
+Follow the [Slim](http://www.slimframework.com/docs/v4/start/web-servers) for PHP install guide
 
 ## Getting Data
 
-### Using `film-data.py`
+Using `film-data.py`
 
 1. Get an API key for [OMDb](http://www.omdbapi.com/apikey.aspx)
 
