@@ -1,10 +1,18 @@
 <?php
 
 declare(strict_types=1);
+
+// composer autoload
 require_once(__DIR__ . "/../vendor/autoload.php");
 
+// slim
 use Slim\Factory\AppFactory;
-use RootHandler\Index; // autoloaded by composer
+
+use DI\Container; // dependency injection container for middleware
+use Slim\Views\PhpRenderer; // template engine
+
+// Root handlers, autoloaded by composer
+use RootHandler\Index;
 
 // configure mysql database connection
 try {
@@ -21,10 +29,22 @@ try {
   throw new PDOException($e->getMessage(), (int) $e->getCode());
 }
 
-// configure app
+// create container for middleware
+$container = new Container();
+
+// set view engine
+$container->set("view", function () {
+  $renderer = new PhpRenderer();
+  $renderer->setTemplatePath(__DIR__ . "/../templates");
+  $renderer->setLayout("layout.php");
+  return $renderer;
+});
+
+// create app
+AppFactory::setContainer($container);
 $app = AppFactory::create();
 
 // setup routes
-$app->group("/", new Index($db_cnmr));
+$app->group("/", new Index($db_cnmr, $container));
 
 $app->run();
