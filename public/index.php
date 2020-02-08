@@ -13,6 +13,7 @@ use Slim\Views\PhpRenderer; // template engine
 
 // Root handlers, autoloaded by composer
 use RootHandler\Index;
+use RootHandler\Films;
 
 // configure mysql database connection
 try {
@@ -22,7 +23,8 @@ try {
     "FILMl0v3r420",
     [
       PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+      PDO::ATTR_CASE               => PDO::CASE_LOWER
     ]
   );
 } catch (PDOException $e) {
@@ -45,6 +47,7 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 
 // setup routes
-$app->group("/", new Index($db_cnmr, $container));
+$app->group("/", new Index($db_cnmr));
+$app->group("/films", new Films($db_cnmr));
 
 $app->run();
