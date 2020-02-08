@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RootHandler;
 
 use Slim\Routing\RouteCollectorProxy;
