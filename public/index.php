@@ -14,6 +14,7 @@ use Slim\Views\PhpRenderer; // template engine
 // Root handlers, autoloaded by composer
 use RootHandler\Index;
 use RootHandler\Films;
+use RootHandler\Cinemas;
 
 // configure mysql database connection
 try {
@@ -49,5 +50,9 @@ $app = AppFactory::create();
 // setup routes
 $app->group("/", new Index($db_cnmr));
 $app->group("/films", new Films($db_cnmr));
+$app->group("/cinemas", new Cinemas($db_cnmr));
+
+// redirects
+$app->redirect("/home", "/", 200); // home goes to root
 
 $app->run();

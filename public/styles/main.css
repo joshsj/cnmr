@@ -1,3 +1,5 @@
+@import url("../fonts/fonts.css");
+
 *,
 *::before,
 *::after {
@@ -5,4 +7,47 @@
   margin: 0;
   box-sizing: border-box;
   /* border: 1px solid red; */
+}
+
+body {
+  width: 70%;
+  margin: 0 auto;
+  /* boost base font size */
+  font-size: 1.3rem;
+  color: #121212;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Josefin Sans";
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* header */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.2rem solid currentColor;
+  margin: 2rem 0;
+}
+
+/* remove link coloring */
+header a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+header > nav > ul {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+
+header > nav > ul > li {
+  margin-left: 3rem;
 }

@@ -9,8 +9,21 @@
 </head>
 
 <body>
-  <?= $content; // template content
-  ?>
+  <header>
+    <h1><a href="/home">CNMR</a></h1>
+    <nav>
+      <ul>
+        <li>
+          <h2><a href="/films">Films</a></h2>
+        </li>
+        <li>
+          <h2><a href="/cinemas">Cinemas</a></h2>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <?= $content ?>
 </body>
 
 </html>
