@@ -37,11 +37,35 @@ class Films extends AbstractRouteHandler
     }
 
     $root = function (Request $req, Response $res, $args) use ($films) {
-      $this->get("view")->render($res, "films.php", ["films" => $films]);
+      $this->get("view")->render(
+        $res,
+        "films.php",
+        [
+          "title" => "Cinemas",
+          "films" => $films
+        ]
+      );
       return $res;
     };
 
+    // root
     $group->get("", $root);
     $group->get("/", $root);
+
+    // by film id
+    $group->get(
+      "/{id}",
+      function (Request $req, Response $res, $args) use ($films) {
+        $film = current(array_filter($films, function ($film) use ($args) {
+          return $film->id == $args["id"];
+        }));
+
+        $this->get("view")->render($res, "films.php", [
+          "title" => "Film",
+          "films" => [$film]
+        ]);
+        return $res;
+      }
+    );
   }
 }
