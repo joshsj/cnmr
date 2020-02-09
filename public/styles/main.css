@@ -35,6 +35,14 @@ p:last-child {
   margin-bottom: 0;
 }
 
+/* form elements dont inherit font by default */
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
 /* header */
 
 #header-container {

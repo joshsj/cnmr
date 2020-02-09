@@ -14,7 +14,7 @@ class Cinemas extends AbstractRouteHandler
   {
     $cinemas = $this->db->query("select * from cinema")->fetchAll();
 
-    $root = function (Request $req, Response $res, $args) use ($cinemas) {
+    $root = function (Request $req, Response $res, array $args) use ($cinemas) {
       $this->get("view")->render($res, "cinemas.twig", ["cinemas" => $cinemas]);
       return $res;
     };

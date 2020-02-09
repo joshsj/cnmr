@@ -36,7 +36,7 @@ class Films extends AbstractRouteHandler
       array_push($films, $film); // save film
     }
 
-    $root = function (Request $req, Response $res, $args) use ($films) {
+    $root = function (Request $req, Response $res, array $args) use ($films) {
       $this->get("view")->render(
         $res,
         "films.twig",
@@ -54,7 +54,7 @@ class Films extends AbstractRouteHandler
     // by film id
     $group->get(
       "/{id}",
-      function (Request $req, Response $res, $args) use ($films) {
+      function (Request $req, Response $res, array $args) use ($films) {
         $film = current(array_filter($films, function ($film) use ($args) {
           return $film->id == $args["id"];
         }));

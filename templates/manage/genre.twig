@@ -1,0 +1,15 @@
+{% extends "manage/main.twig" %} {% block head %}
+<script src="/scripts/manage/genre.js"></script>
+{% endblock %} {% block content %}
+<h1>Genre</h1>
+{% for genre in genres %}
+<div>
+  <label id="{{ genre.id }}">{{ genre.name }}</label>
+  <input class="btnChange" type="button" value="Change" for="{{ genre.id }}" />
+  <input class="btnDelete" type="button" value="Delete" for="{{ genre.id }}" />
+</div>
+{% endfor %}
+<div>
+  <input id="btnNew" type="button" value="New" />
+</div>
+{% endblock %}
