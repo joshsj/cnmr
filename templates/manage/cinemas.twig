@@ -1,0 +1,9 @@
+{% extends "manage/main.twig" %} {% block content %}
+<h1>Cinemas</h1>
+{% for cinema in cinemas %}
+<ul>
+  <li>
+    <a href="/manage/cinemas/{{ cinema.id }}">{{ cinema.city }}</a>
+  </li>
+</ul>
+{% endfor %} {% endblock %}

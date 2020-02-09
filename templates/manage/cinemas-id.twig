@@ -1,0 +1,46 @@
+{% extends "manage/main.twig" %} {% block content %}
+<h1>Cinema: {{ cinema.city }}</h1>
+<section>
+  <form>
+    <table>
+      <tr>
+        <td>ID</td>
+        <td>{{ cinema.id }}</td>
+      </tr>
+      <tr>
+        <td>Shop</td>
+        <td>
+          <input name="shop" type="checkbox" {% if cinema.shop == true
+          %}checked{% endif %} />
+        </td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>
+          <input name="address" value="{{ cinema.address }}" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Area</td>
+        <td>
+          <input name="area" value="{{ cinema.area }}" />
+        </td>
+      </tr>
+      <tr>
+        <td>City</td>
+        <td>
+          <input name="city" value="{{ cinema.city }}" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Postcode</td>
+        <td>
+          <input name="postcode" value="{{ cinema.postcode }}" required />
+        </td>
+      </tr>
+    </table>
+
+    <input type="submit" value="Update" />
+  </form>
+</section>
+{% endblock %}

@@ -37,6 +37,7 @@ class Manage extends AbstractRouteHandler
       return $res;
     });
 
+    // film
     $group->get("/films/{id}", function (Request $req, Response $res, array $args) use ($db) {
       // get film data
       $q_film = $db->prepare("select * from film where id = ?");
@@ -63,6 +64,22 @@ class Manage extends AbstractRouteHandler
       }
 
       $this->get("view")->render($res, "manage/films-id.twig", ["film" => $film, "genres" => $genres]);
+      return $res;
+    });
+
+    // all cinemas list
+    $group->get("/cinemas", function (Request $req, Response $res, array $args) use ($db) {
+      $cinemas = $db->query("select id, city from cinema;")->fetchAll();
+      $this->get("view")->render($res, "manage/cinemas.twig", ["cinemas" => $cinemas]);
+      return $res;
+    });
+
+    $group->get("/cinemas/{id}", function (Request $req, Response $res, array $args) use ($db) {
+      $q_cinema = $db->prepare("select * from cinema where id = ?");
+      $q_cinema->execute([$args["id"]]);
+      $cinema = $q_cinema->fetch();
+
+      $this->get("view")->render($res, "/manage/cinemas-id.twig", ["cinema" => $cinema]);
       return $res;
     });
   }
