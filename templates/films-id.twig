@@ -1,9 +1,12 @@
-{% extends "main.twig" %} {% block content %}
+{% extends "main.twig" %}
+{% block content %}
 <h1>{{ film.title }}</h1>
-<p><b>Certificate: </b>{{ film.certificate }}</p>
-<p><b>Released: </b>{{ film.released }}</p>
-<p><b>Runtime: </b>{{ film.runtime }} minutes</p>
-<p><b>Director: </b>{{ film.director }}</p>
-<p><b>Genres: </b>{{ film.genres|join(", ")}}</p>
-<p><b>Description: </b>{{ film.description }}</p>
+<section>
+<p><h3>Certificate</h3>{{ film.certificate }}</p>
+<p><h3>Released</h3>   {{ film.released }}</p>
+<p><h3>Runtime</h3>    {{ film.runtime }} minutes</p>
+<p><h3>Director</h3>   {{ film.director }}</p>
+<p><h3>Genres</h3>     {{ film.genres|join(", ")}}</p>
+<p><h3>Description</h3>{{ film.description }}</p>
+</section>
 {% endblock %}
