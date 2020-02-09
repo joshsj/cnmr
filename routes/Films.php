@@ -25,10 +25,10 @@ class Films extends AbstractRouteHandler
 
     // get film genres
     while ($film = $q_film->fetch()) {
-      $q_genres->execute([$film->id]); // get film genres
+      $q_genres->execute([$film["id"]]); // get film genres
 
       // store genres, selecting genre from pair
-      $film->genres = array_map(function ($pair) {
+      $film["genres"] = array_map(function ($pair) {
         return $pair["name"];
       }, $q_genres->fetchAll(\PDO::FETCH_ASSOC));
 
@@ -55,7 +55,7 @@ class Films extends AbstractRouteHandler
       "/{id}",
       function (Request $req, Response $res, array $args) use ($films) {
         $film = current(array_filter($films, function ($film) use ($args) {
-          return $film->id == $args["id"];
+          return $film["id"] == $args["id"];
         }));
 
         $this->get("view")->render($res, "films-id.twig", [

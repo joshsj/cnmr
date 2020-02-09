@@ -1,0 +1,106 @@
+{% extends "manage/main.twig" %} {% block head %}
+<script src="/scripts/manage/genre.js"></script>
+{% endblock %} {% block content %}
+<h1>Film: {{ film.title }}</h1>
+<section>
+  <form>
+    {# name=cnmr.film.column_name #}
+    <table>
+      <tr>
+        <td>ID</td>
+        <td>{{ film.id }}</td>
+      </tr>
+      <tr>
+        <td>Title</td>
+        <td><input name="title" value="{{ film.title }}" required /></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>
+          <textarea name="description" rows="5" cols="40" required>{{
+            film.description
+          }}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>Released</td>
+        <td>
+          <input
+            name="released"
+            type="date"
+            value="{{ film.released }}"
+            required
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Runtime</td>
+        <td>
+          <input
+            name="released"
+            type="number"
+            value="{{ film.runtime }}"
+            required
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Certificate</td>
+        <td>
+          <input name="certificate" value="{{ film.certificate }}" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Director</td>
+        <td><input name="director" value="{{ film.director }}" required /></td>
+      </tr>
+      <tr>
+        <td>Adult Price</td>
+        <td>
+          £<input name="price_adult" value="{{ film.price_adult }}" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Adult Child</td>
+        <td>
+          £<input name="price_child" value="{{ film.price_child }}" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Adult Student</td>
+        <td>
+          £<input
+            name="price_student"
+            value="{{ film.price_student }}"
+            required
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td>Genres</td>
+        <td id="genres">
+          {% for genre in genres %}
+          <div>
+            {# check box if film has genre #}
+            <input
+              name="genre-{{ genre.id }}"
+              type="checkbox"
+              {%
+              if
+              genre.film_has
+              %}checked{%
+              endif
+              %}
+            />
+            <label for="genre-{{ genre.id }}">{{ genre.name }}</label>
+          </div>
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+
+    <input type="submit" value="Update" />
+  </form>
+</section>
+{% endblock %}
