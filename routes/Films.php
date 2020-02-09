@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace RootHandler;
 
-use PDO;
 use Slim\Routing\RouteCollectorProxy;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -31,7 +30,7 @@ class Films extends AbstractRouteHandler
       // store genres, selecting genre from pair
       $film->genres = array_map(function ($pair) {
         return $pair["name"];
-      }, $q_genres->fetchAll(PDO::FETCH_ASSOC));
+      }, $q_genres->fetchAll(\PDO::FETCH_ASSOC));
 
       array_push($films, $film); // save film
     }
