@@ -2,14 +2,40 @@
 <script src="/scripts/manage/genre.js"></script>
 {% endblock %} {% block content %}
 <h1>Genre</h1>
-{% for genre in genres %}
-<div>
-  <label id="{{ genre.id }}">{{ genre.name }}</label>
-  <input class="btnChange" type="button" value="Change" for="{{ genre.id }}" />
-  <input class="btnDelete" type="button" value="Delete" for="{{ genre.id }}" />
-</div>
-{% endfor %}
-<div>
-  <input id="btnNew" type="button" value="New" />
-</div>
+<section>
+  <form>
+    <table>
+      {# headers #}
+      <tr>
+        <td>ID</td>
+        <td>
+          Name
+        </td>
+      </tr>
+      {# genre data #} {% for genre in genres %}
+      <tr>
+        <td>{{ genre.id }}</td>
+        <td><input name="{{ genre.id }}" value="{{ genre.name }}" /></td>
+        <td>
+          <input
+            class="btnDelete"
+            type="button"
+            value="Delete"
+            for="{{ genre.id }}"
+          />
+        </td>
+      </tr>
+      {% endfor %} {# buttons #}
+    </table>
+
+    <input class="btnUpdate" type="submit" value="Update" />
+  </form>
+</section>
+
+<section>
+  <form>
+    <input name="newGenre" required />
+    <input type="submit" value="New" for="name" />
+  </form>
+</section>
 {% endblock %}

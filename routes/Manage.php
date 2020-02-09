@@ -24,7 +24,7 @@ class Manage extends AbstractRouteHandler
 
     // root for each table
     $group->get("/genre", function (Request $req, Response $res, array $args) use ($db) {
-      $genres = $db->query("select * from genre")->fetchAll();
+      $genres = $db->query("select * from genre order by id")->fetchAll();
 
       $this->get("view")->render($res, "manage/genre.twig", ["genres" => $genres]);
       return $res;
