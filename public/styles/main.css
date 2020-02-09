@@ -10,13 +10,25 @@
 }
 
 body {
-  color: #121212;
+  color: rgba(0, 0, 0, 0.84);
   font-family: "Merriweather", serif;
+  font-size: 1.1rem;
 }
 
 main {
   margin: 0 auto;
-  width: 50%;
+  width: 55%;
+}
+
+main * {
+  /* space all elements based on font-size */
+  margin-bottom: 0.3em;
+}
+
+section {
+  border-left: 0.2em solid firebrick;
+  padding-left: 1em;
+  margin-bottom: 2em;
 }
 
 h1,
@@ -27,12 +39,23 @@ h3 {
   text-transform: uppercase;
 }
 
-p {
-  margin-bottom: 1rem;
+h1 {
+  font-size: 2.5em;
 }
 
-p:last-child {
-  margin-bottom: 0;
+h3 {
+  /* used for inline headers */
+  display: inline-block;
+  font-size: 1em;
+  margin-right: 0.5em;
+}
+
+p {
+  line-height: 1.6;
+}
+
+a {
+  color: firebrick;
 }
 
 /* form elements dont inherit font by default */
@@ -46,9 +69,9 @@ button {
 /* header */
 
 #header-container {
-  padding: 1.5rem 0;
-  border-bottom: 0.1rem solid currentColor;
-  margin-bottom: 2.5rem;
+  padding: 1.5em 0;
+  border-bottom: 0.2em solid firebrick;
+  margin-bottom: 1em;
   display: flex;
   justify-content: center;
 }
@@ -67,7 +90,7 @@ header a {
 }
 
 header a:hover {
-  color: cornflowerblue;
+  color: firebrick;
   transition: color 0.25s ease;
 }
 
@@ -78,5 +101,5 @@ header > nav > ul {
 }
 
 header > nav > ul > li {
-  margin-left: 3rem;
+  margin-left: 2.5em;
 }

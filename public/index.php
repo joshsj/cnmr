@@ -46,7 +46,7 @@ $container->set("view", Twig::create("../templates"));
 $app->group("/", new Index($db_cnmr));
 $app->group("/films", new Films($db_cnmr));
 $app->group("/cinemas", new Cinemas($db_cnmr));
-$app->group("/manage", new Manage($db_cnmr));
+// $app->group("/manage", new Manage($db_cnmr));
 
 // redirects
 $app->redirect("/home", "/", 200); // home goes to root
