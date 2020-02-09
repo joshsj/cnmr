@@ -12,8 +12,13 @@ class Cinemas extends AbstractRouteHandler
 {
   public function __invoke(RouteCollectorProxy $group)
   {
-    $root = function (Request $req, Response $res, $args) {
-      $this->get("view")->render($res, "cinemas.php", ["title" => "Cinemas"]);
+    $cinemas = $this->db->query("select * from cinema")->fetchAll();
+
+    $root = function (Request $req, Response $res, $args) use ($cinemas) {
+      $this->get("view")->render($res, "cinemas.php", [
+        "title" => "Cinemas",
+        "cinemas" => $cinemas
+      ]);
       return $res;
     };
 

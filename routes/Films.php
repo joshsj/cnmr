@@ -60,9 +60,9 @@ class Films extends AbstractRouteHandler
           return $film->id == $args["id"];
         }));
 
-        $this->get("view")->render($res, "films.php", [
+        $this->get("view")->render($res, "films-id.php", [
           "title" => "Film",
-          "films" => [$film]
+          "film" => $film
         ]);
         return $res;
       }

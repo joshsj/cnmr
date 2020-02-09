@@ -24,3 +24,12 @@
     url("josefin-sans-700.woff2") format("woff2"),
     url("josefin-sans-700.woff") format("woff");
 }
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Merriweather Light"), local("Merriweather-Light"),
+    url("merriweather-300.woff2") format("woff2"),
+    url("merriweather-300.woff") format("woff");
+}

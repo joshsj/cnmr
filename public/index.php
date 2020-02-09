@@ -9,12 +9,14 @@ require_once(__DIR__ . "/../vendor/autoload.php");
 use Slim\Factory\AppFactory;
 
 use DI\Container; // dependency injection container for middleware
+use Psr\Http\Message\StreamInterface;
 use Slim\Views\PhpRenderer; // template engine
 
 // Root handlers, autoloaded by composer
 use RootHandler\Index;
 use RootHandler\Films;
 use RootHandler\Cinemas;
+use Slim\Exception\HttpNotFoundException;
 
 // configure mysql database connection
 try {
@@ -32,27 +34,39 @@ try {
   throw new PDOException($e->getMessage(), (int) $e->getCode());
 }
 
-// create container for middleware
-$container = new Container();
-
-// set view engine
-$container->set("view", function () {
-  $renderer = new PhpRenderer();
-  $renderer->setTemplatePath(__DIR__ . "/../templates");
-  $renderer->setLayout("layout.php");
-  return $renderer;
-});
-
 // create app
+$container = new Container();
 AppFactory::setContainer($container);
 $app = AppFactory::create();
 
-// setup routes
+// setup view engine
+$container->set("view", function () {
+  $renderer = new PhpRenderer();
+  $renderer->setTemplatePath(__DIR__ . "/../templates");
+  $renderer->setLayout("main.php");
+  return $renderer;
+});
+
+// routes
 $app->group("/", new Index($db_cnmr));
 $app->group("/films", new Films($db_cnmr));
 $app->group("/cinemas", new Cinemas($db_cnmr));
 
 // redirects
 $app->redirect("/home", "/", 200); // home goes to root
+
+// error handling
+$app
+  ->addErrorMiddleware(true, true, true)
+  // handle 404s
+  ->setErrorHandler(HttpNotFoundException::class, function () use ($app) {
+    $res = $app->getResponseFactory()->createResponse()->withStatus(404);
+
+    $this->get("view")->render($res, "404.php", [
+      "title" => "Film"
+    ]);
+
+    return $res;
+  });
 
 $app->run();

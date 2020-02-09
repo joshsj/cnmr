@@ -10,36 +10,57 @@
 }
 
 body {
-  width: 70%;
-  margin: 0 auto;
-  /* boost base font size */
-  font-size: 1.3rem;
   color: #121212;
+  font-family: "Merriweather", serif;
+}
+
+main {
+  margin: 0 auto;
+  width: 50%;
 }
 
 h1,
 h2,
 h3 {
-  font-family: "Josefin Sans";
+  font-family: "Josefin Sans", sans-serif;
   font-weight: 600;
   text-transform: uppercase;
 }
 
+p {
+  margin-bottom: 1rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
 /* header */
 
+#header-container {
+  padding: 1.5rem 0;
+  border-bottom: 0.1rem solid currentColor;
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+
 header {
+  width: 75%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding-bottom: 0.5rem;
-  border-bottom: 0.2rem solid currentColor;
-  margin: 2rem 0;
 }
 
 /* remove link coloring */
 header a {
   color: currentColor;
   text-decoration: none;
+}
+
+header a:hover {
+  color: cornflowerblue;
+  transition: color 0.25s ease;
 }
 
 header > nav > ul {
