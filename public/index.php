@@ -7,16 +7,16 @@ require_once(__DIR__ . "/../vendor/autoload.php");
 
 // slim
 use Slim\Factory\AppFactory;
+use Slim\Exception\HttpNotFoundException;
 
 use DI\Container; // dependency injection container for middleware
-use Psr\Http\Message\StreamInterface;
-use Slim\Views\PhpRenderer; // template engine
+use Slim\Views\Twig; // template engine
 
 // Root handlers, autoloaded by composer
 use RootHandler\Index;
 use RootHandler\Films;
 use RootHandler\Cinemas;
-use Slim\Exception\HttpNotFoundException;
+use RootHandler\Manage;
 
 // configure mysql database connection
 try {
@@ -40,12 +40,7 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 
 // setup view engine
-$container->set("view", function () {
-  $renderer = new PhpRenderer();
-  $renderer->setTemplatePath(__DIR__ . "/../templates");
-  $renderer->setLayout("main.php");
-  return $renderer;
-});
+$container->set("view", Twig::create("../templates"));
 
 // routes
 $app->group("/", new Index($db_cnmr));
@@ -55,6 +50,7 @@ $app->group("/cinemas", new Cinemas($db_cnmr));
 // redirects
 $app->redirect("/home", "/", 200); // home goes to root
 
+
 // error handling
 $app
   ->addErrorMiddleware(true, true, true)
@@ -62,9 +58,7 @@ $app
   ->setErrorHandler(HttpNotFoundException::class, function () use ($app) {
     $res = $app->getResponseFactory()->createResponse()->withStatus(404);
 
-    $this->get("view")->render($res, "404.php", [
-      "title" => "Film"
-    ]);
+    $this->get("view")->render($res, "404.twig");
 
     return $res;
   });

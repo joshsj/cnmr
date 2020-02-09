@@ -39,9 +39,8 @@ class Films extends AbstractRouteHandler
     $root = function (Request $req, Response $res, $args) use ($films) {
       $this->get("view")->render(
         $res,
-        "films.php",
+        "films.twig",
         [
-          "title" => "Cinemas",
           "films" => $films
         ]
       );
@@ -60,8 +59,7 @@ class Films extends AbstractRouteHandler
           return $film->id == $args["id"];
         }));
 
-        $this->get("view")->render($res, "films-id.php", [
-          "title" => "Film",
+        $this->get("view")->render($res, "films-id.twig", [
           "film" => $film
         ]);
         return $res;
