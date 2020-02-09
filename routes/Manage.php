@@ -22,7 +22,7 @@ class Manage extends AbstractRouteHandler
     $group->get("", $root);
     $group->get("/", $root);
 
-    // root for each table
+    // genre table
     $group->get("/genre", function (Request $req, Response $res, array $args) use ($db) {
       $genres = $db->query("select * from genre order by id")->fetchAll();
 
@@ -30,7 +30,14 @@ class Manage extends AbstractRouteHandler
       return $res;
     });
 
-    $group->get("/film/{id}", function (Request $req, Response $res, array $args) use ($db) {
+    // all films list
+    $group->get("/films", function (Request $req, Response $res, array $args) use ($db) {
+      $films = $db->query("select id, title from film;")->fetchAll();
+      $this->get("view")->render($res, "manage/films.twig", ["films" => $films]);
+      return $res;
+    });
+
+    $group->get("/films/{id}", function (Request $req, Response $res, array $args) use ($db) {
       // get film data
       $q_film = $db->prepare("select * from film where id = ?");
       $q_film->execute([$args["id"]]);
@@ -55,7 +62,7 @@ class Manage extends AbstractRouteHandler
         }
       }
 
-      $this->get("view")->render($res, "manage/film.twig", ["film" => $film, "genres" => $genres]);
+      $this->get("view")->render($res, "manage/films-id.twig", ["film" => $film, "genres" => $genres]);
       return $res;
     });
   }
