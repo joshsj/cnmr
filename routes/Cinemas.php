@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RootHandler;
+namespace RouteHandler;
 
 use Slim\Routing\RouteCollectorProxy;
 use Psr\Http\Message\ResponseInterface as Response;
