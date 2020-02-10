@@ -23,27 +23,44 @@ class Login extends AbstractRouteHandler
     $group->get("/", $root_get);
 
     $root_post =  function (Request $req, Response $res, array $args) use ($db) {
-      $email = $req->getParsedBody()["email"];
+      // sanitize email
+      $email = filter_var($req->getParsedBody()["email"], FILTER_SANITIZE_EMAIL);
       $pass = $req->getParsedBody()["password"];
+
+      // mode - create
+      if (isset($req->getParsedBody()["create"])) {
+        if ($email = filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          $pass = password_hash($pass, PASSWORD_DEFAULT);
+
+          // insert user into db
+          $i_user = $db->prepare("insert into user (email, password) values (?, ?)");
+          $i_user->execute([$email, $pass]);
+
+          // setup session
+          $_SESSION["email"] = $email;
+          $_SESSION["admin"] = false;
+
+          // go to account page
+          return $res->withHeader("Location", "/account");
+        }
+      }
+      // mode - sign in
 
       // try to find user
       $q_user = $db->prepare("select * from user where email = ?");
       $q_user->execute([$email]);
+      $user = $q_user->fetch();
 
-      if ($user = $q_user->fetch()) {
-        // validate password
-        // password_verify($pass, $user["password"]);
-
+      // user found, passwords match
+      if ($user && password_verify($pass, $user["password"])) {
         // create session
         $_SESSION["email"] = $user["email"];
         $_SESSION["admin"] = filter_var($user["admin"], FILTER_VALIDATE_BOOLEAN);
 
-        $res = $res->withHeader("Location", "/account");
-      } else {
-        $res = $res->withHeader("Location", "/");
+        return $res->withHeader("Location", "/account");
       }
 
-      return $res;
+      return $res = $res->withHeader("Location", "/");
     };
 
     $group->post("", $root_post);
