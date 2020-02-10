@@ -2,7 +2,7 @@
 <h1>Your Account</h1>
 <p><b>Email</b>{{ account.email }}</p>
 {% if account.admin %}
-<p><b>Admin ✔️</b></p>
+<p><b>Admin</b>(<a href="/manage">Manage</a>)</p>
 {% endif %}
 <p><a href="/logout">Logout</a></p>
 {% endblock %}
