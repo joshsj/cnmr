@@ -15,7 +15,7 @@ class Films extends AbstractRouteHandler
     $films = [];
 
     // get all films
-    $q_film = $this->db->query("select ID, Title, Description, Released, Runtime, Certificate, Director from film");
+    $q_film = $this->db->query("select ID, Title, Description, Released, Runtime, Certificate, Director, TMDB_ID from film");
     $q_genres = $this->db->prepare("
     select genre.Name
     from film_genre

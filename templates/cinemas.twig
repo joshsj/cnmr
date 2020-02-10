@@ -3,10 +3,10 @@
 <section>
   <h2>{% if c.area is defined %}{{ c.area }}, {% endif %}{{ c.city }}</h2>
 
-  <h3>Facilities</h3>
+  <b>Facilities</b>
   <p>{% if c.shop is defined %}Shop{% else %}None{% endif %}</p>
 
-  <h3>Find Us</h3>
+  <b>Find Us</b>
   <address>
     <p>{{ c.area }}</p>
     <p>{{ c.address }}</p>

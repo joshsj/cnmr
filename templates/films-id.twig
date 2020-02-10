@@ -1,12 +1,29 @@
-{% extends "main.twig" %}
-{% block content %}
+{% extends "main.twig" %} {% block head %}
+<script src="/scripts/reviews.js"></script>
+{% endblock %} {% block content %}
 <h1>{{ film.title }}</h1>
-<section>
-<p><h3>Certificate</h3>{{ film.certificate }}</p>
-<p><h3>Released</h3>   {{ film.released }}</p>
-<p><h3>Runtime</h3>    {{ film.runtime }} minutes</p>
-<p><h3>Director</h3>   {{ film.director }}</p>
-<p><h3>Genres</h3>     {{ film.genres|join(", ")}}</p>
-<p><h3>Description</h3>{{ film.description }}</p>
+{# store additional data in data-* attributes #}
+<section
+  id="film"
+  data-film-id="{{ film.id }}"
+  data-tmdb-id="{{ film.tmdb_id }}"
+>
+  <p><b>Certificate</b>{{ film.certificate }}</p>
+  <p><b>Released</b> {{ film.released }}</p>
+  <p><b>Runtime</b> {{ film.runtime }} minutes</p>
+  <p><b>Director</b> {{ film.director }}</p>
+  <p><b>Genres</b> {{ film.genres|join(", ")}}</p>
+  <p><b>Description</b>{{ film.description }}</p>
+  {# loaded client side using api #}
+  <p id="reviews" style="display: none">
+    <b>Review</b>
+    <span id="score"></span>/10 from <span id="count"></span> users (<a
+      id="reviews-link"
+      href="https://www.themoviedb.org"
+      target="_blank"
+      rel="noopener noreferrer"
+      >TMDB</a
+    >)
+  </p>
 </section>
 {% endblock %}
