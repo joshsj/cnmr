@@ -24,15 +24,6 @@ use Slim\Exception\HttpNotFoundException;
 use DI\Container; // dependency injection container for middleware
 use Slim\Views\Twig; // template engine
 
-// Root handlers, autoloaded by composer
-use RootHandler\Index;
-use RootHandler\Films;
-use RootHandler\Cinemas;
-use RootHandler\Manage;
-use RootHandler\Account;
-use RootHandler\Login;
-use RootHandler\Logout;
-
 // configure mysql database connection
 try {
   $db_cnmr = new PDO(
@@ -58,13 +49,13 @@ $app = AppFactory::create();
 $container->set("view", Twig::create("../templates"));
 
 // routes
-$app->group("/", new Index($db_cnmr));
-$app->group("/films", new Films($db_cnmr));
-$app->group("/cinemas", new Cinemas($db_cnmr));
-$app->group("/manage", new Manage($db_cnmr));
-$app->group("/login", new Login($db_cnmr));
-$app->group("/logout", new Logout($db_cnmr));
-$app->group("/account", new Account($db_cnmr));
+$app->group("/", new RouteHandler\Index($db_cnmr));
+$app->group("/films", new RouteHandler\Films($db_cnmr));
+$app->group("/cinemas", new RouteHandler\Cinemas($db_cnmr));
+$app->group("/manage", new RouteHandler\Manage($db_cnmr));
+$app->group("/login", new RouteHandler\Login($db_cnmr));
+$app->group("/logout", new RouteHandler\Logout($db_cnmr));
+$app->group("/account", new RouteHandler\Account($db_cnmr));
 
 // redirects
 $app->redirect("/home", "/", 200); // home goes to root

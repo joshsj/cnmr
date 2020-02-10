@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RootHandler;
+namespace RouteHandler;
 
 use PDO;
 
