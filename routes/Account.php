@@ -14,7 +14,7 @@ class Account extends AbstractRouteHandler
   {
     $root = function (Request $req, Response $res, array $args) {
       // check logged in
-      if (isset($_SESSION["user"])) {
+      if (isset($_SESSION["email"])) {
         // show account page
         $this->get("view")->render($res, "account.twig", ["account" => $_SESSION]);
       } else {
