@@ -1,0 +1,6 @@
+{% extends "main.twig" %} {% block content %}
+<h1>Your Account</h1>
+<p><h3>Email</h3>{{ account.email }}</p>
+{% if account.admin %}<p><h3>Admin ✔️</h3></p>{% endif %}
+<p><a href="/logout">Logout</a></p>
+{% endblock %}

@@ -58,6 +58,23 @@ a {
   color: firebrick;
 }
 
+table {
+  border-spacing: 0.3em;
+}
+
+input,
+textarea {
+  border: 0.05em solid currentColor;
+  padding: 0.2em;
+}
+
+button,
+input[type="submit"],
+input[type="button"] {
+  background-color: transparent;
+  text-decoration: underline;
+}
+
 /* form elements dont inherit font by default */
 input,
 select,

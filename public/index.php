@@ -2,6 +2,18 @@
 
 declare(strict_types=1);
 
+// setup sessions
+session_set_cookie_params([
+  // TODO make better
+  // "lifetime" => 0, // on browser close
+  // "path" => "",
+  // "domain" => "",
+  // "secure" => true,
+  "httponly" => true,
+  "samesite" => true,
+]);
+session_start();
+
 // composer autoload
 require_once(__DIR__ . "/../vendor/autoload.php");
 
@@ -17,6 +29,9 @@ use RootHandler\Index;
 use RootHandler\Films;
 use RootHandler\Cinemas;
 use RootHandler\Manage;
+use RootHandler\Account;
+use RootHandler\Login;
+use RootHandler\Logout;
 
 // configure mysql database connection
 try {
@@ -47,6 +62,9 @@ $app->group("/", new Index($db_cnmr));
 $app->group("/films", new Films($db_cnmr));
 $app->group("/cinemas", new Cinemas($db_cnmr));
 $app->group("/manage", new Manage($db_cnmr));
+$app->group("/login", new Login($db_cnmr));
+$app->group("/logout", new Logout($db_cnmr));
+$app->group("/account", new Account($db_cnmr));
 
 // redirects
 $app->redirect("/home", "/", 200); // home goes to root
