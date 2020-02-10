@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-// setup sessions
-session_set_cookie_params([
-  // TODO make better
-  // "lifetime" => 0, // on browser close
-  // "path" => "",
-  // "domain" => "",
-  // "secure" => true,
-  "httponly" => true,
-  "samesite" => true,
-]);
-session_start();
 
 // composer autoload
 require_once(__DIR__ . "/../vendor/autoload.php");
@@ -32,6 +21,22 @@ use RootHandler\Manage;
 use RootHandler\Account;
 use RootHandler\Login;
 use RootHandler\Logout;
+use RootHandler\API;
+
+// setup sessions
+session_set_cookie_params([
+  // TODO make better
+  // "lifetime" => 0, // on browser close
+  // "path" => "",
+  // "domain" => "",
+  // "secure" => true,
+  "httponly" => true,
+  "samesite" => true,
+]);
+session_start();
+
+// get .env variables
+Dotenv\Dotenv::createImmutable(__DIR__ . "/../config")->load();
 
 // configure mysql database connection
 try {
@@ -65,6 +70,7 @@ $app->group("/manage", new Manage($db_cnmr));
 $app->group("/login", new Login($db_cnmr));
 $app->group("/logout", new Logout($db_cnmr));
 $app->group("/account", new Account($db_cnmr));
+$app->group("/api", new API($db_cnmr));
 
 // redirects
 $app->redirect("/home", "/", 200); // home goes to root
