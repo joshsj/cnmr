@@ -1,29 +1,35 @@
 {% extends "main.twig" %} {% block head %}
+<link rel="stylesheet" href="/styles/films-id.css" />
 <script src="/scripts/reviews.js"></script>
 {% endblock %} {% block content %}
-<h1>{{ film.title }}</h1>
-{# store additional data in data-* attributes #}
-<section
-  id="film"
-  data-film-id="{{ film.id }}"
-  data-tmdb-id="{{ film.tmdb_id }}"
->
-  <p><b>Certificate</b>{{ film.certificate }}</p>
-  <p><b>Released</b> {{ film.released }}</p>
-  <p><b>Runtime</b> {{ film.runtime }} minutes</p>
-  <p><b>Director</b> {{ film.director }}</p>
-  <p><b>Genres</b> {{ film.genres|join(", ")}}</p>
-  <p><b>Description</b>{{ film.description }}</p>
-  {# loaded client side using api #}
-  <p id="reviews" style="display: none">
-    <b>Reviews</b>
-    <span id="score"></span>/10 from <span id="count"></span> users (<a
-      id="reviews-link"
-      href="https://www.themoviedb.org"
-      target="_blank"
-      rel="noopener noreferrer"
-      >TMDB</a
-    >)
-  </p>
-</section>
+<main>
+  {# store additional data in data-* attributes #}
+  <img src="/img/{{ film.id }}/poster.jpg" alt="{{ film.title }}" />
+  <div>
+    <h1>{{ film.title }}</h1>
+    <section
+      id="film"
+      data-film-id="{{ film.id }}"
+      data-tmdb-id="{{ film.tmdb_id }}"
+    >
+      <p><b>Certificate</b>{{ film.certificate }}</p>
+      <p><b>Released</b> {{ film.released }}</p>
+      <p><b>Runtime</b> {{ film.runtime }} minutes</p>
+      <p><b>Director</b> {{ film.director }}</p>
+      <p><b>Genres</b> {{ film.genres|join(", ")}}</p>
+      <p><b>Description</b>{{ film.description }}</p>
+      {# loaded client side using api #}
+      <p id="reviews" style="display: none">
+        <b>Reviews</b>
+        <span id="score"></span>/10 from <span id="count"></span> users (<a
+          id="reviews-link"
+          href="https://www.themoviedb.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >TMDB</a
+        >)
+      </p>
+    </section>
+  </div>
+</main>
 {% endblock %}

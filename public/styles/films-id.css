@@ -1,0 +1,9 @@
+main {
+  display: flex;
+  align-items: center;
+}
+
+img {
+  width: 18em;
+  margin-right: 2em;
+}
