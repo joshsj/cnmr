@@ -29,38 +29,53 @@ class Login extends AbstractRouteHandler
 
       // mode - create
       if (isset($req->getParsedBody()["create"])) {
+        // validate email
         if ($email = filter_var($email, FILTER_VALIDATE_EMAIL)) {
           $pass = password_hash($pass, PASSWORD_DEFAULT);
 
-          // insert user into db
-          $i_user = $db->prepare("insert into user (email, password) values (?, ?)");
-          $i_user->execute([$email, $pass]);
+          $q_user = $db->prepare("insert into user (email, password) values (?, ?)");
 
-          // setup session
-          $_SESSION["email"] = $email;
-          $_SESSION["admin"] = false;
+          try {
+            // insert user into db
+            $q_user->execute([$email, $pass]);
 
-          // go to account page
-          return $res->withHeader("Location", "/account");
+            // setup session
+            $_SESSION["email"] = $email;
+            $_SESSION["admin"] = false;
+
+            // go to account page
+            $res = $res->withHeader("Location", "/account");
+          } catch (\PDOException $e) {
+            // email already in use
+            // render page with alert message
+            $this->get("view")->render($res, "login.twig", ["msg" => "Email already in use"]);
+          }
+        } else {
+          // email invalid
+          $this->get("view")->render($res, "login.twig", ["msg" => "Email is invalid"]);
+        }
+      } else {
+        // mode - sign in
+
+        // try to find user
+        $q_user = $db->prepare("select * from user where email = ?");
+        $q_user->execute([$email]);
+        $user = $q_user->fetch();
+
+        // user found, passwords match
+        if ($user && password_verify($pass, $user["password"])) {
+          // create session
+          $_SESSION["email"] = $user["email"];
+          $_SESSION["admin"] = filter_var($user["admin"], FILTER_VALIDATE_BOOLEAN);
+
+          $res = $res->withHeader("Location", "/account");
+        } else {
+          // email or password wrong
+          $this->get("view")->render($res, "login.twig", ["msg" => "Email or password incorrect"]);
         }
       }
-      // mode - sign in
 
-      // try to find user
-      $q_user = $db->prepare("select * from user where email = ?");
-      $q_user->execute([$email]);
-      $user = $q_user->fetch();
-
-      // user found, passwords match
-      if ($user && password_verify($pass, $user["password"])) {
-        // create session
-        $_SESSION["email"] = $user["email"];
-        $_SESSION["admin"] = filter_var($user["admin"], FILTER_VALIDATE_BOOLEAN);
-
-        return $res->withHeader("Location", "/account");
-      }
-
-      return $res = $res->withHeader("Location", "/");
+      return $res;
     };
 
     $group->post("", $root_post);
