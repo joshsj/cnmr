@@ -46,8 +46,6 @@ h1 {
 
 b {
   /* used for inline headers */
-  display: inline-block;
-  font-size: 1em;
   margin-right: 0.5em;
 }
 
