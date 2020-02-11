@@ -8,7 +8,10 @@
   },
   "autoload": {
     "psr-4": {
-      "RouteHandler\\": "routes/"
+      "RouteHandler\\": [
+        "routes/",
+        "routes/manage"
+      ]
     }
   }
 }
