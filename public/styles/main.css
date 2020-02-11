@@ -74,6 +74,10 @@ input[type="button"] {
   text-decoration: underline;
 }
 
+th {
+  text-align: left;
+}
+
 /* form elements dont inherit font by default */
 input,
 select,
