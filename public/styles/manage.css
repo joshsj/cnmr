@@ -1,0 +1,31 @@
+/* indicate deletion on placeholders
+must be separate, as grouped selectors
+will be ignore if one selector is invalid */
+
+/* WebKit, Blink, Edge */
+::-webkit-input-placeholder {
+  text-decoration-line: line-through;
+}
+/* Mozilla Firefox 4 to 18 */
+:-moz-placeholder {
+  text-decoration-line: line-through;
+  opacity: 1;
+}
+/* Mozilla Firefox 19+ */
+::-moz-placeholder {
+  text-decoration-line: line-through;
+  opacity: 1;
+}
+/* Internet Explorer 10-11 */
+:-ms-input-placeholder {
+  text-decoration-line: line-through;
+}
+/* Microsoft Edge */
+::-ms-input-placeholder {
+  text-decoration-line: line-through;
+}
+
+/* I want to die */
+::placeholder {
+  text-decoration-line: line-through;
+}

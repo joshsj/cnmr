@@ -3,7 +3,7 @@
 {% endblock %} {% block content %}
 <h1>Table: Genre</h1>
 <section>
-  <form>
+  <form method="POST" action="/manage/genre/update">
     <table>
       {# headers #}
       <thead>
@@ -18,7 +18,13 @@
         {# genre data #} {% for genre in genres %}
         <tr>
           <td>{{ genre.id }}</td>
-          <td><input name="{{ genre.id }}" value="{{ genre.name }}" /></td>
+          <td>
+            <input
+              name="{{ genre.id }}"
+              value="{{ genre.name }}"
+              placeholder="{{ genre.name }}"
+            />
+          </td>
         </tr>
         {% endfor %} {# buttons #}
         <tr>
