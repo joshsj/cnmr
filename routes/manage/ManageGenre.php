@@ -17,7 +17,7 @@ class ManageGenre extends AbstractRouteHandler
 
     $root = function (Request $req, Response $res) use ($db) {
       // get and clean session message
-      $msg = $_SESSION["msg"] ?? "";
+      $msg = $_SESSION["msg"];
       $_SESSION["msg"] = "";
 
       $genres = $db->query("select * from genre order by id")->fetchAll();

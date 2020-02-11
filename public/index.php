@@ -23,6 +23,8 @@ session_set_cookie_params([
   "samesite" => true,
 ]);
 session_start();
+// prevent missing key exceptions
+$_SESSION["msg"] ?? $_SESSION["msg"] = "";
 
 // get .env variables
 Dotenv\Dotenv::createImmutable(__DIR__ . "/../config")->load();

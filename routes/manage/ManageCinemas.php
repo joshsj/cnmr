@@ -24,7 +24,7 @@ class ManageCinemas extends AbstractRouteHandler
     $group->get("/", $root);
 
     $group->get("/{id}", function (Request $req, Response $res, array $args) use ($db) {
-      $msg = $_SESSION["msg"] ?? "";
+      $msg = $_SESSION["msg"];
       $_SESSION["msg"] = "";
 
       $q_cinema = $db->prepare("select * from cinema where id = ?");
