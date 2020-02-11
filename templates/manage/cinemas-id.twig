@@ -1,7 +1,7 @@
 {% extends "manage/main.twig" %} {% block content %}
 <h1>Cinema: {{ cinema.city }}</h1>
 <section>
-  <form>
+  <form method="POST" action="/manage/cinemas/{{ cinema.id }}/update">
     <table>
       <tr>
         <td>ID</td>
@@ -38,9 +38,16 @@
           <input name="postcode" value="{{ cinema.postcode }}" required />
         </td>
       </tr>
+      <tr>
+        <td></td>
+        <td>
+          <input type="submit" value="Update" />
+        </td>
+      </tr>
     </table>
-
-    <input type="submit" value="Update" />
   </form>
+</section>
+<section>
+  <p>{{ msg }}</p>
 </section>
 {% endblock %}
