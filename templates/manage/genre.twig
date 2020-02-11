@@ -1,41 +1,45 @@
 {% extends "manage/main.twig" %} {% block head %}
 <script src="/scripts/manage/genre.js"></script>
 {% endblock %} {% block content %}
-<h1>Genre</h1>
+<h1>Table: Genre</h1>
 <section>
   <form>
     <table>
       {# headers #}
-      <tr>
-        <th>ID</th>
-        <th>
-          Name
-        </th>
-      </tr>
-      {# genre data #} {% for genre in genres %}
-      <tr>
-        <td>{{ genre.id }}</td>
-        <td><input name="{{ genre.id }}" value="{{ genre.name }}" /></td>
-        <td>
-          <input
-            class="btnDelete"
-            type="button"
-            value="Delete"
-            for="{{ genre.id }}"
-          />
-        </td>
-      </tr>
-      {% endfor %} {# buttons #}
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>
+            Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {# genre data #} {% for genre in genres %}
+        <tr>
+          <td>{{ genre.id }}</td>
+          <td><input name="{{ genre.id }}" value="{{ genre.name }}" /></td>
+        </tr>
+        {% endfor %} {# buttons #}
+        <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="Update" />
+          </td>
+        </tr>
+      </tbody>
     </table>
-
-    <input class="btnUpdate" type="submit" value="Update" />
   </form>
 </section>
 
 <section>
-  <form>
-    <input name="newGenre" required />
-    <input type="submit" value="New" for="name" />
+  <form method="POST" , action="/manage/genre/new">
+    <input name="genre" required />
+    <input type="submit" value="New" for="genre" />
   </form>
+</section>
+
+<section>
+  <p>{{ msg }}</p>
 </section>
 {% endblock %}
