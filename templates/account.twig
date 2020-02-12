@@ -1,10 +1,22 @@
 {% extends "main.twig" %} {% block content %}
 <h1>Your Account</h1>
-<section class="ruled">
-  <p><b>Email</b>{{ account.email }}</p>
-  {% if account.admin %}
-  <p><b>Admin</b>(<a href="/manage">Manage</a>)</p>
-  {% endif %}
-  <p><a href="/logout">Logout</a></p>
-</section>
+<div class="ruled">
+  <section>
+    <h2>Details</h2>
+    <p><b>Email</b>{{ account.email }}</p>
+    {% if account.admin %}
+    <p><b>Admin</b>(<a href="/manage">Manage</a>)</p>
+    {% endif %}
+    <p><a href="/logout">Logout</a></p>
+  </section>
+  <section>
+    <h2>Tickets</h2>
+    {% for b in bookings %}
+    <p>
+      <b>{{ b.film }}</b
+      >{{ [b.start, b.cinema_area, b.cinema_city]|join(", ")  }}
+    </p>
+    {% endfor %}
+  </section>
+</div>
 {% endblock %}
