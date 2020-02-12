@@ -84,7 +84,7 @@ $app->redirect("/home", "/", 200); // home goes to root
 $app
   ->addErrorMiddleware(true, true, true)
   // handle 404s
-  ->setDefaultErrorHandler(function () use ($app) {
+  ->setErrorHandler(\Slim\Exception\HttpNotFoundException::class, function () use ($app) {
     $res = $app->getResponseFactory()->createResponse()->withStatus(404);
 
     $this->get("view")->render($res, "404.twig");
