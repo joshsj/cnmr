@@ -19,7 +19,6 @@ class API extends AbstractRouteHandler
     };
 
     $group->get("", $root);
-    $group->get("/", $root);
 
     $reviews = function (Request $req, Response $res, array $args) {
       // get tmdb id

@@ -20,6 +20,5 @@ class Cinemas extends AbstractRouteHandler
     };
 
     $group->get("", $root);
-    $group->get("/", $root);
   }
 }

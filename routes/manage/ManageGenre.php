@@ -31,7 +31,6 @@ class ManageGenre extends AbstractRouteHandler
     };
 
     $group->get("", $root);
-    $group->get("/", $root);
 
     // new genre
     $group->post("/new", function (Request $req, Response $res) use ($db) {

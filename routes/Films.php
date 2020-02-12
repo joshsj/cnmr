@@ -48,7 +48,6 @@ class Films extends AbstractRouteHandler
 
     // root
     $group->get("", $root);
-    $group->get("/", $root);
 
     // by film id
     $group->get(

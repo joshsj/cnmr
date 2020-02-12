@@ -24,6 +24,5 @@ class Account extends AbstractRouteHandler
     };
 
     $group->get("", $root);
-    $group->get("/", $root);
   }
 }

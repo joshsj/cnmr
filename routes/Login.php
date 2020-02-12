@@ -20,7 +20,6 @@ class Login extends AbstractRouteHandler
     };
 
     $group->get("", $root_get);
-    $group->get("/", $root_get);
 
     $root_post =  function (Request $req, Response $res, array $args) use ($db) {
       // sanitize email
@@ -79,6 +78,5 @@ class Login extends AbstractRouteHandler
     };
 
     $group->post("", $root_post);
-    $group->post("/", $root_post);
   }
 }

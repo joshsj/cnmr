@@ -18,6 +18,5 @@ class Index extends AbstractRouteHandler
     };
 
     $group->get("", $root);
-    $group->get("/", $root);
   }
 }

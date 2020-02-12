@@ -23,7 +23,6 @@ class ManageFilms extends AbstractRouteHandler
     };
 
     $group->get("", $root);
-    $group->get("/", $root);
 
     $group->get("/{id}", function (Request $req, Response $res, array $args) use ($db) {
       $msg = $_SESSION["msg"];

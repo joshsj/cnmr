@@ -16,10 +16,9 @@ class Logout extends AbstractRouteHandler
       session_destroy(); // remove session data from server
       $_SESSION = [];    // clean session variable
       setcookie("PHPSESSID", "", time() - 1); // remove session ID cookie from browser
-      return $res->withHeader("Location", "/");
+      return $res->withHeader("Location", "/home");
     };
 
     $group->get("", $root);
-    $group->get("/", $root);
   }
 }
