@@ -1,5 +1,6 @@
-{% extends "main.twig" %} {% block content %} {% for c in cinemas %}
+{% extends "main.twig" %} {% block content %}
 <h1>Our Cinemas</h1>
+{% for c in cinemas %}
 <section class="ruled">
   <h2>{% if c.area is defined %}{{ c.area }}, {% endif %}{{ c.city }}</h2>
 
