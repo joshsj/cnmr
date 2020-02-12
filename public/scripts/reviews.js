@@ -1,14 +1,14 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
   // get film id
-  var tmdb_id = document.getElementById("film").getAttribute("data-tmdb-id");
+  const tmdb_id = document.getElementById("film").getAttribute("data-tmdb-id");
 
-  var req = new XMLHttpRequest();
+  const req = new XMLHttpRequest();
   req.open("GET", "/api/reviews?id=" + tmdb_id, true);
   req.send();
 
-  req.addEventListener("load", function() {
+  req.addEventListener("load", () => {
     // parse data
-    var data = JSON.parse(req.responseText);
+    const data = JSON.parse(req.responseText);
 
     // insert into page
     document.getElementById("score").textContent = data.score;
