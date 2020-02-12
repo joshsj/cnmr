@@ -3,6 +3,9 @@
 {% endblock %} {% block content %}
 <h1>Film: {{ film.title }}</h1>
 <section class="ruled">
+  <p>{{ msg }}</p>
+</section>
+<section class="ruled">
   <form action="/manage/films/{{ film.id }}/update" method="POST">
     {# name=cnmr.film.column_name #}
     <table>
@@ -128,7 +131,15 @@
     <input type="submit" value="Update" />
   </form>
 </section>
+
 <section class="ruled">
-  <p>{{ msg }}</p>
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    action="/manage/films/{{ film.id }}/update-poster"
+  >
+    <input type="file" name="image" accept=".jpg,.JPG" />
+    <input type="submit" value="Upload" />
+  </form>
 </section>
 {% endblock %}

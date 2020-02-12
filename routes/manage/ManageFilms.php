@@ -158,5 +158,34 @@ class ManageFilms extends AbstractRouteHandler
 
       return $res->withHeader("Location", "/manage/films/$id");
     });
+
+    $group->post("/{id}/update-poster",  function (Request $req, Response $res, array $args) use ($db) {
+      $id = $args["id"];
+      $file = $_FILES["image"];
+      $tmp_name = $file["tmp_name"];
+
+      // check no error
+      if ($file["error"] > 0) {
+        $_SESSION["msg"] = "Image could not be uploaded.";
+        return $res->withHeader("Location", "/manage/films/$id");
+      }
+
+      // check no dodgy upload
+      if (exif_imagetype($tmp_name) !== IMAGETYPE_JPEG) {
+        $_SESSION["msg"] = "Only .jpg images are supported.";
+        return $res->withHeader("Location", "/manage/films/$id");
+      }
+
+      // move file
+      $path = $_SERVER['DOCUMENT_ROOT'] . "/img/$id.jpg";
+      if (!move_uploaded_file($tmp_name, $path)) {
+        $_SESSION["msg"] = "Error moving uploaded file.";
+        return $res->withHeader("Location", "/manage/films/$id");
+      }
+
+      // woo
+      $_SESSION["msg"] = "Image uploaded successfully.";
+      return $res->withHeader("Location", "/manage/films/$id");
+    });
   }
 }
