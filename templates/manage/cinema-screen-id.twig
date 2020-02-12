@@ -1,0 +1,49 @@
+{% extends "manage/main.twig" %} {% block content %}
+<h1>Screen</h1>
+<section class="ruled">
+  <p>{{ msg }}</p>
+</section>
+
+<section class="ruled">
+  <form
+    method="POST"
+    action="/manage/screens/{{ screen.cinema_id }}/{{ screen.id }}/update"
+  >
+    <table>
+      <tr>
+        <td>ID</td>
+        <td>{{ screen.id }}</td>
+      </tr>
+      <tr>
+        <td>Cinema</td>
+        <td>{{ [screen.cinema_area, screen.cinema_city]|join(", ") }}</td>
+      </tr>
+      <tr>
+        <td>Capacity</td>
+        <td>
+          <input
+            name="capacity"
+            type="number"
+            min="0"
+            step="1"
+            value="{{ screen.capacity }}"
+            required
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Number</td>
+        <td>
+          <input name="no" value="{{ screen.no }}" required />
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <input type="submit" value="Update" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</section>
+{% endblock %}

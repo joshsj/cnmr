@@ -21,8 +21,9 @@ class Manage extends AbstractRouteHandler
 
     $group->get("", $root);
 
-    $group->group("/genre", new ManageGenre($this->db));
+    $group->group("/genre", new ManageGenre($db));
     $group->group("/cinemas", new ManageCinemas($db));
     $group->group("/films", new ManageFilms($db));
+    $group->group("/screens", new ManageScreens($db));
   }
 }
