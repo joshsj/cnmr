@@ -32,11 +32,11 @@ class Login extends AbstractRouteHandler
         if ($email = filter_var($email, FILTER_VALIDATE_EMAIL)) {
           $pass = password_hash($pass, PASSWORD_DEFAULT);
 
-          $q_user = $db->prepare("insert into user (email, password) values (?, ?)");
+          $q_account = $db->prepare("insert into account (email, password) values (?, ?)");
 
           try {
             // insert user into db
-            $q_user->execute([$email, $pass]);
+            $q_account->execute([$email, $pass]);
 
             // setup session
             $_SESSION["email"] = $email;
@@ -57,15 +57,15 @@ class Login extends AbstractRouteHandler
         // mode - sign in
 
         // try to find user
-        $q_user = $db->prepare("select * from user where email = ?");
-        $q_user->execute([$email]);
-        $user = $q_user->fetch();
+        $q_account = $db->prepare("select * from account where email = ?");
+        $q_account->execute([$email]);
+        $q_account = $q_account->fetch();
 
         // user found, passwords match
-        if ($user && password_verify($pass, $user["password"])) {
+        if ($q_account && password_verify($pass, $q_account["password"])) {
           // create session
-          $_SESSION["email"] = $user["email"];
-          $_SESSION["admin"] = filter_var($user["admin"], FILTER_VALIDATE_BOOLEAN);
+          $_SESSION["email"] = $q_account["email"];
+          $_SESSION["admin"] = filter_var($q_account["admin"], FILTER_VALIDATE_BOOLEAN);
 
           $res = $res->withHeader("Location", "/account");
         } else {
