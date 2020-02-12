@@ -1,7 +1,7 @@
 {% extends "main.twig" %} {% block content %}
 <h1>Our Films</h1>
 {% for film in films %}
-<section>
+<section class="ruled">
   <h2>{{ film.title }}</h2>
   <p>{{ film.description }}</p>
   <p><a href="/films/{{ film.id }}">See more</a></p>

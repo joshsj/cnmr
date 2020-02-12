@@ -1,6 +1,6 @@
 {% extends "manage/main.twig" %} {% block content %}
 <h1>Table: Genre</h1>
-<section>
+<section class="ruled">
   <form method="POST" action="/manage/genre/update">
     <table>
       {# headers #}
@@ -36,14 +36,14 @@
   </form>
 </section>
 
-<section>
+<section class="ruled">
   <form method="POST" , action="/manage/genre/new">
     <input name="genre" required />
     <input type="submit" value="New" for="genre" />
   </form>
 </section>
 
-<section>
+<section class="ruled">
   <p>{{ msg }}</p>
 </section>
 {% endblock %}

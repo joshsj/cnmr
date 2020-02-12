@@ -1,9 +1,26 @@
 main {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 img {
   width: 18em;
   margin-right: 2em;
+}
+
+@media only screen and (max-width: 1199px) {
+  img {
+    width: 15em;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  main {
+    flex-direction: column-reverse;
+  }
+
+  img {
+    margin-top: 1em;
+    align-self: center;
+  }
 }

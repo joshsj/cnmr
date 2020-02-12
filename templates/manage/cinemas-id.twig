@@ -1,6 +1,6 @@
 {% extends "manage/main.twig" %} {% block content %}
 <h1>Cinema: {{ cinema.city }}</h1>
-<section>
+<section class="ruled">
   <form method="POST" action="/manage/cinemas/{{ cinema.id }}/update">
     <table>
       <tr>
@@ -47,7 +47,7 @@
     </table>
   </form>
 </section>
-<section>
+<section class="ruled">
   <p>{{ msg }}</p>
 </section>
 {% endblock %}

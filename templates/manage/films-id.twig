@@ -2,7 +2,7 @@
 <script src="/scripts/manage/genre.js"></script>
 {% endblock %} {% block content %}
 <h1>Film: {{ film.title }}</h1>
-<section>
+<section class="ruled">
   <form action="/manage/films/{{ film.id }}/update" method="POST">
     {# name=cnmr.film.column_name #}
     <table>
@@ -128,7 +128,7 @@
     <input type="submit" value="Update" />
   </form>
 </section>
-<section>
+<section class="ruled">
   <p>{{ msg }}</p>
 </section>
 {% endblock %}
