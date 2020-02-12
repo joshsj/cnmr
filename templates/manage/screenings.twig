@@ -1,0 +1,19 @@
+{% extends "manage/main.twig" %} {% block content %}
+<h1>Table: Screening</h1>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Start</th>
+    <th>Film</th>
+    <th>Cinema</th>
+  </tr>
+  <tr>
+    <td>{{ screening.id }}</td>
+    <td>{{ screening.start }}</td>
+    <td>{{ screening.film_title }}</td>
+    <td>{{ [screening.cinema_city, screening.cinema_area]|join(", ") }}</td>
+    <td><a href="/manage/screenings/{{ screening.id }}">Manage</a></td>
+  </tr>
+</table>
+
+{% endblock %}
