@@ -151,6 +151,7 @@ class ManageFilms extends AbstractRouteHandler
           $db
             ->prepare("insert into film_genre values (?, ?)")
             ->execute([$id, $genre_id]);
+          ++$updates;
         }
       }
 
