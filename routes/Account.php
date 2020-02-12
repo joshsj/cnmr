@@ -12,7 +12,7 @@ class Account extends AbstractRouteHandler
 {
   public function __invoke(RouteCollectorProxy $group)
   {
-    $root = function (Request $req, Response $res, array $args) {
+    $group->get("", function (Request $req, Response $res, array $args) {
       // check logged in
       if (isset($_SESSION["email"])) {
         // show account page
@@ -21,8 +21,6 @@ class Account extends AbstractRouteHandler
         $res = $res->withHeader("Location", "/login"); // redirect to login page
       }
       return $res;
-    };
-
-    $group->get("", $root);
+    });
   }
 }

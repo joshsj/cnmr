@@ -13,14 +13,12 @@ class API extends AbstractRouteHandler
 {
   public function __invoke(RouteCollectorProxy $group)
   {
-    $root = function (Request $req, Response $res, array $args) {
+    $group->get("", function (Request $req, Response $res, array $args) {
       // root cant do anything
       return $res->withStatus(400);
-    };
+    });
 
-    $group->get("", $root);
-
-    $reviews = function (Request $req, Response $res, array $args) {
+    $group->get("/reviews", function (Request $req, Response $res, array $args) {
       // get tmdb id
       $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
 
@@ -50,8 +48,6 @@ class API extends AbstractRouteHandler
       return $res
         ->withStatus(200)
         ->withHeader("Content-Type", "application/json");
-    };
-
-    $group->get("/reviews", $reviews);
+    });
   }
 }

@@ -12,7 +12,6 @@ class Manage extends AbstractRouteHandler
 {
   public function __invoke(RouteCollectorProxy $group)
   {
-
     // restrict manage access to admins only
     // check admin in session
     if (!(isset($_SESSION["admin"]) && $_SESSION["admin"] === true)) {
@@ -23,12 +22,10 @@ class Manage extends AbstractRouteHandler
 
     $db = $this->db;
 
-    $root = function (Request $req, Response $res, array $args) {
+    $group->get("", function (Request $req, Response $res, array $args) {
       $this->get("view")->render($res, "manage/main.twig");
       return $res;
-    };
-
-    $group->get("", $root);
+    });
 
     $group->group("/genre", new ManageGenre($db));
     $group->group("/cinemas", new ManageCinemas($db));

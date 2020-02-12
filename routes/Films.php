@@ -35,19 +35,11 @@ class Films extends AbstractRouteHandler
       array_push($films, $film); // save film
     }
 
-    $root = function (Request $req, Response $res, array $args) use ($films) {
-      $this->get("view")->render(
-        $res,
-        "films.twig",
-        [
-          "films" => $films
-        ]
-      );
-      return $res;
-    };
-
     // root
-    $group->get("", $root);
+    $group->get("", function (Request $req, Response $res, array $args) use ($films) {
+      $this->get("view")->render($res, "films.twig", ["films" => $films]);
+      return $res;
+    });
 
     // by film id
     $group->get(

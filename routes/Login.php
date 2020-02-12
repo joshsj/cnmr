@@ -14,14 +14,14 @@ class Login extends AbstractRouteHandler
   {
     $db = $this->db;
 
-    $root_get = function (Request $req, Response $res, array $args) {
+    // login page
+    $group->get("", function (Request $req, Response $res, array $args) {
       $this->get("view")->render($res, "login.twig");
       return $res;
-    };
+    });
 
-    $group->get("", $root_get);
-
-    $root_post =  function (Request $req, Response $res, array $args) use ($db) {
+    // attempt login
+    $group->post("", function (Request $req, Response $res, array $args) use ($db) {
       // sanitize email
       $email = filter_var($req->getParsedBody()["email"], FILTER_SANITIZE_EMAIL);
       $pass = $req->getParsedBody()["password"];
@@ -75,8 +75,6 @@ class Login extends AbstractRouteHandler
       }
 
       return $res;
-    };
-
-    $group->post("", $root_post);
+    });
   }
 }

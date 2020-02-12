@@ -15,7 +15,7 @@ class ManageGenre extends AbstractRouteHandler
   {
     $db = $this->db;
 
-    $root = function (Request $req, Response $res) use ($db) {
+    $group->get("", function (Request $req, Response $res) use ($db) {
       // get and clean session message
       $msg = $_SESSION["msg"];
       $_SESSION["msg"] = "";
@@ -28,9 +28,7 @@ class ManageGenre extends AbstractRouteHandler
         ["genres" => $genres, "msg" =>  $msg]
       );
       return $res;
-    };
-
-    $group->get("", $root);
+    });
 
     // new genre
     $group->post("/new", function (Request $req, Response $res) use ($db) {

@@ -12,13 +12,12 @@ class Cinemas extends AbstractRouteHandler
 {
   public function __invoke(RouteCollectorProxy $group)
   {
-    $cinemas = $this->db->query("select * from cinema")->fetchAll();
+    $db = $this->db;
 
-    $root = function (Request $req, Response $res, array $args) use ($cinemas) {
+    $group->get("", function (Request $req, Response $res, array $args) use ($db) {
+      $cinemas = $db->query("select * from cinema")->fetchAll();
       $this->get("view")->render($res, "cinemas.twig", ["cinemas" => $cinemas]);
       return $res;
-    };
-
-    $group->get("", $root);
+    });
   }
 }

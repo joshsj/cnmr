@@ -14,13 +14,11 @@ class ManageCinemas extends AbstractRouteHandler
   {
     $db = $this->db;
 
-    $root = function (Request $req, Response $res, array $args) use ($db) {
+    $group->get("", function (Request $req, Response $res, array $args) use ($db) {
       $cinemas = $db->query("select id, city from cinema;")->fetchAll();
       $this->get("view")->render($res, "manage/cinemas.twig", ["cinemas" => $cinemas]);
       return $res;
-    };
-
-    $group->get("", $root);
+    });
 
     $group->get("/{id}", function (Request $req, Response $res, array $args) use ($db) {
       $msg = $_SESSION["msg"];

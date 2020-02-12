@@ -12,11 +12,9 @@ class Index extends AbstractRouteHandler
 {
   public function __invoke(RouteCollectorProxy $group)
   {
-    $root = function (Request $req, Response $res, array $args) {
+    $group->get("", function (Request $req, Response $res, array $args) {
       $this->get("view")->render($res, "index.twig");
       return $res;
-    };
-
-    $group->get("", $root);
+    });
   }
 }
