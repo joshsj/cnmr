@@ -65,17 +65,7 @@ $app->group("/login", new RouteHandler\Login($db_cnmr));
 $app->group("/logout", new RouteHandler\Logout($db_cnmr));
 $app->group("/account", new RouteHandler\Account($db_cnmr));
 $app->group("/api", new RouteHandler\API($db_cnmr));
-
-// restrict manage access to admins only
-$app->group("/manage", function (RouteCollectorProxy $group) use ($app, $db_cnmr) {
-  // check admin in session
-  if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
-    (new RouteHandler\Manage($db_cnmr))($group);
-  } else {
-    // redirect all paths on /manage to home
-    $group->redirect($group->getBasePath(), "/home", 401);
-  }
-});
+$app->group("/manage", new RouteHandler\Manage($db_cnmr));
 
 // redirects
 $app->redirect("/home", "/", 200); // home goes to root

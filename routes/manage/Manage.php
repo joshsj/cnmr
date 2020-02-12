@@ -12,6 +12,15 @@ class Manage extends AbstractRouteHandler
 {
   public function __invoke(RouteCollectorProxy $group)
   {
+
+    // restrict manage access to admins only
+    // check admin in session
+    if (!(isset($_SESSION["admin"]) && $_SESSION["admin"] === true)) {
+      // redirect all paths on /manage to home
+      $group->redirect($group->getBasePath(), "/home", 401);
+      return;
+    }
+
     $db = $this->db;
 
     $root = function (Request $req, Response $res, array $args) {
