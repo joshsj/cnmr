@@ -1,0 +1,77 @@
+{% extends "main.twig" %} {% block head %}
+<script src="/scripts/book.js"></script>
+{% endblock %} {% block content %}
+<h1>Book</h1>
+<form method="POST">
+  <section class="ruled">
+    <h2>Where</h2>
+    <select id="select-where" name="cinema">
+      <option disabled selected>Choose a cinema</option>
+      {% for cinema in cinemas %}
+      <option
+        value="{{ cinema.id }}"
+        data-screenings="{{ cinema.screenings }}"
+        >{{[cinema.area, cinema.city]|join(", ")}}</option
+      >
+      {% endfor %}
+    </select>
+  </section>
+
+  <section
+    id="select-when"
+    name="screening"
+    class="ruled"
+    style="display: none"
+  >
+    <h2>When</h2>
+    <select id="screening-options" name="screening">
+      <option disabled selected>Choose a time</option>
+      <option>Choose a time</option>
+    </select>
+  </section>
+
+  <div id="select-who" class="ruled" style="display: none">
+    <h2>Who</h2>
+    <table>
+      <tr>
+        <td>Adult</td>
+        <td>
+          <input
+            name="tickets[adult]"
+            type="number"
+            min="0"
+            max="5"
+            value="1"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Child</td>
+        <td>
+          <input
+            name="tickets[child]"
+            type="number"
+            min="0"
+            max="5"
+            value="0"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>Student</td>
+        <td>
+          <input
+            name="tickets[student]"
+            type="number"
+            min="0"
+            max="5"
+            value="0"
+          />
+        </td>
+      </tr>
+    </table>
+
+    <input type="submit" value="Book" />
+  </div>
+</form>
+{% endblock %}

@@ -22,7 +22,9 @@ class Account extends AbstractRouteHandler
 
       // get account tickets
       $stmt = $db->prepare(
-        'select screening.start, film.title as "film",
+        'select
+        booking.tickets_adult, booking.tickets_child, booking.tickets_student,
+        screening.start, film.title as "film",
         cinema.area as "cinema_area", cinema.city as "cinema_city"
         from booking
         inner join screening on fk_screening = screening.id

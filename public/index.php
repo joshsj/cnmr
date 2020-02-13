@@ -64,6 +64,7 @@ $app->group("/cinemas", new RouteHandler\Cinemas($db_cnmr));
 $app->group("/login", new RouteHandler\Login($db_cnmr));
 $app->group("/logout", new RouteHandler\Logout($db_cnmr));
 $app->group("/account", new RouteHandler\Account($db_cnmr));
+$app->group("/book", new RouteHandler\Book($db_cnmr));
 $app->group("/api", new RouteHandler\API($db_cnmr));
 $app->group("/manage", new RouteHandler\Manage($db_cnmr));
 

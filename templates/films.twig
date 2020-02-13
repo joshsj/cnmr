@@ -4,6 +4,9 @@
 <section class="ruled">
   <h2>{{ film.title }}</h2>
   <p>{{ film.description }}</p>
-  <p><a href="/films/{{ film.id }}">See more</a></p>
+  <p>
+    <a href="/book/{{ film.id }}">Book</a> or
+    <a href="/films/{{ film.id }}">see more</a>
+  </p>
 </section>
 {% endfor %} {% endblock %}
