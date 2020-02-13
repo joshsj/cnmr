@@ -1,4 +1,11 @@
-{% extends "manage/main.twig" %} {% block content %}
+{% extends "manage/main.twig" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+<script src="/scripts/manage/film-id.js"></script>
+{% endblock %} {% block content %}
 <h1>Film: {{ film.title }}</h1>
 <section class="ruled">
   <p>{{ msg }}</p>
@@ -27,8 +34,8 @@
         <td>Released</td>
         <td>
           <input
+            id="released-picker"
             name="released"
-            type="date"
             value="{{ film.released }}"
             required
           />
