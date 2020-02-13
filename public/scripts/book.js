@@ -1,38 +1,58 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const selectWhen = document.getElementById("select-when");
-  const selectWho = document.getElementById("select-who");
+document.addEventListener("DOMContentLoaded", function() {
+  var selectWhen = document.getElementById("select-when");
+  var selectWho = document.getElementById("select-who"); // when cinema chosen
 
-  // when cinema chosen
-  document.getElementById("select-where").addEventListener("change", e => {
-    selectWhen.style.display = ""; // reveal
+  document
+    .getElementById("select-where")
+    .addEventListener("change", function(e) {
+      selectWhen.style.display = ""; // reveal
+      // clear current times except placeholder
 
-    // clear current times except placeholder
-    const screeningOpts = document.getElementById("screening-options");
-    const options = screeningOpts.children;
+      var screeningOpts = document.getElementById("screening-options");
+      var options = screeningOpts.children; // leave 'choose time' placeholder
 
-    // leave 'choose time' placeholder
-    for (let i = 1; i < options.length; ++i) {
-      screeningOpts.removeChild(options[i]);
-    }
+      for (var i = 1; i < options.length; ++i) {
+        screeningOpts.removeChild(options[i]);
+      } // get screenings for cinema
 
-    // get screenings for cinema
-    const screenings = JSON.parse(
-      e.target.selectedOptions[0].getAttribute("data-screenings")
-    );
+      var screenings = JSON.parse(
+        e.target.selectedOptions[0].getAttribute("data-screenings")
+      ); // add options
 
-    // add options
-    for (const screening of screenings) {
-      // create elements
-      const opt = document.createElement("option");
-      opt.setAttribute("value", screening.id);
-      opt.textContent = screening.start;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-      screeningOpts.appendChild(opt);
-    }
-  });
+      try {
+        for (
+          var _iterator = screenings[Symbol.iterator](), _step;
+          !(_iteratorNormalCompletion = (_step = _iterator.next()).done);
+          _iteratorNormalCompletion = true
+        ) {
+          var screening = _step.value;
+          // create elements
+          var opt = document.createElement("option");
+          opt.setAttribute("value", screening.id);
+          opt.textContent = screening.start;
+          screeningOpts.appendChild(opt);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }); // when time chosen
 
-  // when time chosen
-  selectWhen.addEventListener("change", () => {
+  selectWhen.addEventListener("change", function() {
     selectWho.style.display = "";
   });
 });

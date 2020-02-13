@@ -1,22 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
   // get film id
-  const tmdb_id = document.getElementById("film").getAttribute("data-tmdb-id");
-
-  const req = new XMLHttpRequest();
+  var tmdb_id = document.getElementById("film").getAttribute("data-tmdb-id");
+  var req = new XMLHttpRequest();
   req.open("GET", "/api/reviews?id=" + tmdb_id, true);
   req.send();
-
-  req.addEventListener("load", () => {
+  req.addEventListener("load", function() {
     // parse data
-    const data = JSON.parse(req.responseText);
+    var data = JSON.parse(req.responseText); // insert into page
 
-    // insert into page
     document.getElementById("score").textContent = data.score;
-    document.getElementById("count").textContent = data.count;
-    // remove style hiding element
-    document.getElementById("reviews").style.display = null;
+    document.getElementById("count").textContent = data.count; // remove style hiding element
 
-    // add link to tmdb reviews page
+    document.getElementById("reviews").style.display = null; // add link to tmdb reviews page
+
     document
       .getElementById("reviews-link")
       .setAttribute(
