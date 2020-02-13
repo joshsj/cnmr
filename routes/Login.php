@@ -16,7 +16,10 @@ class Login extends AbstractRouteHandler
 
     // login page
     $group->get("", function (Request $req, Response $res, array $args) {
-      $this->get("view")->render($res, "login.twig");
+      $msg = $_SESSION["msg"];
+      $_SESSION["msg"] = "";
+
+      $this->get("view")->render($res, "login.twig", ["msg" => $msg]);
       return $res;
     });
 
@@ -37,21 +40,15 @@ class Login extends AbstractRouteHandler
           try {
             // insert user into db
             $q_account->execute([$email, $pass]);
-
-            // setup session
-            $_SESSION["email"] = $email;
-            $_SESSION["admin"] = false;
-
-            // go to account page
-            $res = $res->withHeader("Location", "/account");
           } catch (\PDOException $e) {
             // email already in use
-            // render page with alert message
-            $this->get("view")->render($res, "login.twig", ["msg" => "Email already in use"]);
+            $_SESSION["msg"] = "Email already in use";
+            return $res->withHeader("Location", "/login");
           }
         } else {
           // email invalid
-          $this->get("view")->render($res, "login.twig", ["msg" => "Email is invalid"]);
+          $_SESSION["msg"] = "Email is invalid";
+          return $res->withHeader("Location", "/login");
         }
       } else {
         // mode - sign in
@@ -61,20 +58,24 @@ class Login extends AbstractRouteHandler
         $q_account->execute([$email]);
         $q_account = $q_account->fetch();
 
-        // user found, passwords match
-        if ($q_account && password_verify($pass, $q_account["password"])) {
-          // create session
-          $_SESSION["email"] = $q_account["email"];
-          $_SESSION["admin"] = filter_var($q_account["admin"], FILTER_VALIDATE_BOOLEAN);
-
-          $res = $res->withHeader("Location", "/account");
-        } else {
-          // email or password wrong
-          $this->get("view")->render($res, "login.twig", ["msg" => "Email or password incorrect"]);
+        // user not found or wrong password
+        if (!($q_account && password_verify($pass, $q_account["password"]))) {
+          $_SESSION["msg"] = "Email or password incorrect";
+          return $res->withHeader("Location", "/login");
         }
       }
 
-      return $res;
+      // setup session
+      $_SESSION["email"] = $email;
+      $_SESSION["admin"] = false;
+
+      // get id
+      $q_id = $db->prepare("select id from account where email = ?");
+      $q_id->execute([$email]);
+      $_SESSION["id"] = $q_id->fetch()["id"];
+
+      // go to account page
+      return $res->withHeader("Location", "/account");
     });
   }
 }
