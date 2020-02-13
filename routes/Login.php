@@ -35,11 +35,11 @@ class Login extends AbstractRouteHandler
         if ($email = filter_var($email, FILTER_VALIDATE_EMAIL)) {
           $pass = password_hash($pass, PASSWORD_DEFAULT);
 
-          $q_account = $db->prepare("insert into account (email, password) values (?, ?)");
+          $stmt = $db->prepare("insert into account (email, password) values (?, ?)");
 
           try {
             // insert user into db
-            $q_account->execute([$email, $pass]);
+            $stmt->execute([$email, $pass]);
           } catch (\PDOException $e) {
             // email already in use
             $_SESSION["msg"] = "Email already in use";
@@ -54,12 +54,12 @@ class Login extends AbstractRouteHandler
         // mode - sign in
 
         // try to find user
-        $q_account = $db->prepare("select * from account where email = ?");
-        $q_account->execute([$email]);
-        $q_account = $q_account->fetch();
+        $stmt = $db->prepare("select * from account where email = ?");
+        $stmt->execute([$email]);
+        $stmt = $stmt->fetch();
 
         // user not found or wrong password
-        if (!($q_account && password_verify($pass, $q_account["password"]))) {
+        if (!($stmt && password_verify($pass, $stmt["password"]))) {
           $_SESSION["msg"] = "Email or password incorrect";
           return $res->withHeader("Location", "/login");
         }
@@ -67,12 +67,13 @@ class Login extends AbstractRouteHandler
 
       // setup session
       $_SESSION["email"] = $email;
-      $_SESSION["admin"] = false;
 
-      // get id
-      $q_id = $db->prepare("select id from account where email = ?");
-      $q_id->execute([$email]);
-      $_SESSION["id"] = $q_id->fetch()["id"];
+      // get id and privileges
+      $stmt = $db->prepare("select id, admin from account where email = ?");
+      $stmt->execute([$email]);
+      $account = $stmt->fetch();
+      $_SESSION["id"] = $account["id"];
+      $_SESSION["admin"] = filter_var($account["admin"], FILTER_VALIDATE_BOOLEAN);
 
       // go to account page
       return $res->withHeader("Location", "/account");
